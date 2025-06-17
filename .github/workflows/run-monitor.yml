@@ -1,0 +1,24 @@
+name: Uso de Variáveis e Secrets
+
+on: [workflow_dispatch]
+
+jobs:
+  contexto-env:
+    runs-on: ubuntu-latest
+    env:
+      APP_ENV: dev
+    steps:
+      - name: Exibe APP_ENV (dentro do contexto env)
+        run: 'echo "APP_ENV (env): $APP_ENV"'
+
+  contexto-vars:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exibe SUPPORT_EMAIL (dentro do contexto vars)
+        run: 'echo "SUPPORT_EMAIL (vars): ${{ vars.SUPPORT_EMAIL }}"'
+
+  contexto-secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Usa a API_KEY de secrets
+        run: 'echo "API_KEY (secrets): ${{ secrets.API_KEY }}"'

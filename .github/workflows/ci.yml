@@ -41,7 +41,7 @@ jobs:
         run: zip -r report.zip status-check.sh README.md
 
       - name: Faz o upload do artefato
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: report
           path: report.zip

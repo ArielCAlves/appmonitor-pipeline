@@ -1,0 +1,40 @@
+name: Diagnóstico Automatizado
+
+on: [workflow_dispatch]
+
+jobs:
+  verificar-variaveis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verifica o APP_ENV
+        id: check_app_env
+        run: |
+          if [ -z "${{ vars.APP_ENV }}" ]; then
+            echo "::error::A variável não foi definida."
+            echo "app_env_status=faltando" >> "$GITHUB_OUTPUT"
+            exit 1
+          else
+            echo "app_env_status=ok" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verifica a API_KEY
+        id: check_api_key
+        run: |
+          if [ -z "${{ secrets.API_KEY }}" ]; then
+            echo "::error::A variável não foi definida."
+            echo "api_key_status=faltando" >> "$GITHUB_OUTPUT"
+            exit 1
+          else
+            echo "api_key_status=ok" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Diagnóstico
+        if: always()
+        run: |
+          echo "### Diagnóstico do Pipeline" >> $GITHUB_STEP_SUMMARY
+          echo "- APP_ENV: ${{ steps.check_app_env.outputs.app_env_status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- API_KEY: ${{ steps.check_api_key.outputs.api_key_status }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Sugestões" >> $GITHUB_STEP_SUMMARY
+          echo "- Verifique se APP_ENV está definida." >> $GITHUB_STEP_SUMMARY
+          echo "- Verifique se API_KEY está definida." >> $GITHUB_STEP_SUMMARY

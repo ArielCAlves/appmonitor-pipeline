@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+env:
+  ACTIONS_STEP_DEBUG: true
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -17,6 +20,11 @@ jobs:
 
       - name: Valida a sintaxe do status-check.sh
         run: bash -n status-check.sh
+
+      - name: Mensagens personalizadas
+        run: |
+          echo "::warning::Verifique se o script está atualizado"
+          echo "::error::Erro simulado de exemplo (ignorado para testes)"
 
   test:
     runs-on: ubuntu-latest
@@ -45,3 +53,10 @@ jobs:
         with:
           name: report
           path: report.zip
+
+      - name: Resumo do Job
+        run: |
+          echo "### Job Summary" >> $GITHUB_STEP_SUMMARY
+          echo "* SO: $RUNNER_OS" >> $GITHUB_STEP_SUMMARY
+          echo "* Branch: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "* Artefato gerado: [report.zip](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY

@@ -21,3 +21,14 @@ Acessadas com `secrets.NOME`.
 - `secrets`: criptografadas e ocultas nos logs.
 
 Obs: Cada uma delas foi criada dentro deste repositório e funcionaram apenas para este projeto do jeito que foram configuradas.
+
+## Badges
+![CI](https://github.com/ArielCAlves/appmonitor-pipeline/actions/workflows/ci.yml/badge.svg)
+
+## Logs e Summaries
+
+Os logs detalhados ajudam a identificar as falhas nos steps de cada job melhorando a manutenabilidade do pipeline.  
+O resumo foi automatizado com (`$GITHUB_STEP_SUMMARY`). Ele exibe o ambiente, branch e artefatos gerados para facilitar a depuração.
+Mensagens com `::warning::` e `::error::` ajudam a identificar os problemas.
+
+
